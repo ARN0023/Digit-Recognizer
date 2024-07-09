@@ -21,7 +21,7 @@ class DigitRecognizerApp:
 
     def paint(self, event):
         x, y = event.x, event.y
-        r = 4  # Adjust the radius for a smaller line
+        r = 3  # Adjust the radius for a smaller line
         self.canvas.create_oval(x-r, y-r, x+r, y+r, fill='black')
         self.draw.ellipse([x-r, y-r, x+r, y+r], fill='black')
 
@@ -36,7 +36,7 @@ class DigitRecognizerApp:
         img = Image.eval(img, lambda x: 255 - x)
         
         # Convert image to numpy array and normalize
-        img = np.array(img) / 255.0
+        img = np.array(img) 
         
         # Flatten the image to match model input shape
         img = img.flatten().reshape(1, -1)
