@@ -3,11 +3,13 @@ from tkinter import messagebox
 from PIL import Image, ImageDraw
 import numpy as np
 import joblib
+from tensorflow.keras.models import load_model
 
 class DigitRecognizerApp:
-    def __init__(self, root, model_path):
+    def __init__(self, root):
         self.root = root
-        self.model = joblib.load(model_path)
+        self.logistic_model_path = './models/logistic_regression.pkl'
+        self.neural_model_path = './models/neural_network_model.h5'
         
         self.canvas = tk.Canvas(root, width=200, height=200, bg='white')
         self.canvas.pack()
@@ -36,20 +38,25 @@ class DigitRecognizerApp:
         img = Image.eval(img, lambda x: 255 - x)
         
         # Convert image to numpy array and normalize
-        img = np.array(img) 
+        img_array = np.array(img) / 255.0
         
         # Flatten the image to match model input shape
-        img = img.flatten().reshape(1, -1)
+        img_flat = img_array.flatten().reshape(1, -1)
         
-        # Print or log the input data for verification
-        # print(f"Input image shape: {img.shape}")
-        # print(f"Input image data:\n{img}")
+        # Load logistic regression model
+        logistic_model = joblib.load(self.logistic_model_path)
         
-        # Make prediction
-        prediction = self.model.predict(img)
+        # Predict using logistic regression model
+        logistic_prediction = logistic_model.predict(img_flat)
         
-        # Show prediction result
-        messagebox.showinfo('Prediction', f'Predicted Digit: {prediction[0]}')
+        # Load neural network model
+        neural_model = load_model(self.neural_model_path)
+        
+        # Predict using neural network model
+        neural_prediction = np.argmax(neural_model.predict(img_flat.reshape(-1, 28, 28)), axis=-1)
+        
+        # Show prediction results
+        messagebox.showinfo('Predictions', f'Logistic Regression Prediction: {logistic_prediction[0]}\nNeural Network Prediction: {neural_prediction[0]}')
         
         self.clear_canvas()
 
@@ -59,6 +66,7 @@ class DigitRecognizerApp:
         self.draw = ImageDraw.Draw(self.image)
 
 if __name__ == '__main__':
+    # Example usage for testing
     root = tk.Tk()
-    app = DigitRecognizerApp(root, './models/logistic_regression.pkl')
+    app = DigitRecognizerApp(root)
     root.mainloop()

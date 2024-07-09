@@ -2,5 +2,6 @@ scikit-learn
 numpy
 Pillow
 joblib
-tk
 pandas
+tensorflow
+keras
