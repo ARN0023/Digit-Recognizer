@@ -1,4 +1,3 @@
-<textarea>
 <h1>Digit Recognition Project</h1>
 
 <p>This project is a digit recognition system using neural networks and logistic regression. It includes a GUI for digit recognition, and scripts for training models on the MNIST dataset.</p>
@@ -118,4 +117,3 @@ python train_model.py
 
 <h2>License</h2>
 <p>This project is licensed under the MIT License. See the LICENSE file for details.</p>
-</textarea>
