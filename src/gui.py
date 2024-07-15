@@ -56,7 +56,7 @@ class DigitRecognizerApp:
         neural_prediction = np.argmax(neural_model.predict(img_flat.reshape(-1, 28, 28)), axis=-1)
         
         # Show prediction results
-        messagebox.showinfo('Predictions', f'Logistic Regression Prediction: {logistic_prediction[0]}\nNeural Network Prediction: {neural_prediction[0]}')
+        messagebox.showinfo('PREDICTIONS', f'Logistic Regression Prediction: {logistic_prediction[0]}\nNeural Network Prediction: {neural_prediction[0]}')
         
         self.clear_canvas()
 
